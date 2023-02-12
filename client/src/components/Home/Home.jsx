@@ -56,7 +56,7 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
         videoGamesApi[5],
 
       );
-      // console.log(concatVideoGames)
+      console.log(concatVideoGames)
 
       setVideoGames(concatVideoGames);
     }
@@ -101,6 +101,10 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
           <h2>{vg.name}</h2>
           <img width={200} src={vg.background_image} alt={vg.name}/>
           
+          {/* {vg.genres.map( date => <h2>{date.name}</h2>)} */}
+
+         {vg.genres && vg.genres.map( date => <h2 key={vg.name}>{date.name}</h2>)}
+
           
           </div>)}
       </div>

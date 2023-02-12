@@ -46,7 +46,7 @@ router.get("/videogame/:idVideogame", async (req, res) => {
 });
 
 router.post("/videogames", async (req, res) => {
-  const { name, description, released, rating, platforms, genres } = req.body;
+  const { name, description, released, rating, platforms, genres,background_image } = req.body;
   try {
     // ["rpg", "strategy", "action"]
 
@@ -69,7 +69,8 @@ router.post("/videogames", async (req, res) => {
         description,
         released,
         rating,
-        platforms
+        platforms,
+        background_image
       );
       await addVideoGames.addGenres(arrayGenres);
 

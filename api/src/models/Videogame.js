@@ -33,6 +33,11 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
 
+    },
+    background_image:{
+      type: DataTypes.STRING,
+      defaultValue: "https://blog.ida.cl/wp-content/uploads/sites/5/2020/05/ida-uxvideojuegos-blog-1024x735.png",
+      allowNull: false,
     }
   }, { timestamps: false });
 };
