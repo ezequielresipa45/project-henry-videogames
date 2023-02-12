@@ -12,6 +12,13 @@ const reducer = (state = initialState, action) => {
         videoGamesApi: [...state.videoGamesApi, action.payload],
       };
 
+
+     case "GET_VIDEOGAMES_DB":
+      return {
+        ...state,
+        videoGamesApi: [...state.videoGamesApi, action.payload],
+      } 
+
     default:
       return {
         ...state,

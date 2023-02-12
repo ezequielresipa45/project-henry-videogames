@@ -1,46 +1,5 @@
 import axios from "axios";
 
-
-// export const addPersonaje = (name) => {
-//     return {
-//       type: "ADD_PERSONAJE",
-//       payload: name,
-//     };
-//   };
-
-
-/*
-const addGenresDb = async (name) => {
-  const newData = await Genre.create({ name });
-
-  return newData;
-};
-*/ 
-
-
-
-
-
-// (async function traerDatosDeLaApi() {
-//   const data = await axios(
-//     "https://api.rawg.io/api/games?key=af54471906e14994b0dc11a4eb9d209d"
-//   );
-
-// //   let datosApis = data.data.results;
-
-// console.log(data.data.results)
-// //   datosApis.map((date) => {
-// //     addGenresDb(date.name);
-// //   });
-// })();
-
-
-
-
-
-
-//"https://api.rawg.io/api/games?key=af54471906e14994b0dc11a4eb9d209d"
-
 export const getVideoGamesApi = (url) => {
   return async function (dispatch) {
     await axios
@@ -51,19 +10,15 @@ export const getVideoGamesApi = (url) => {
   };
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const getVideoGamesDb = () => {
+  return async function (dispatch) {
+    await axios
+      .get("http://localhost:3001/videogames")
+      .then((response) =>
+        dispatch({ type: "GET_VIDEOGAMES_DB", payload: response.data })
+      );
+  };
+};
 
 /*
 export const addPersonaje = (name) => {

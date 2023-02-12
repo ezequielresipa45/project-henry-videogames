@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useState, useEffect } from "react";
-import { getVideoGamesApi } from "../../redux/actions";
+import { getVideoGamesApi, getVideoGamesDb } from "../../redux/actions";
 
 
 
 // URL BASE, LA UTILIZAMOS PARA ITERARLA EN UN USE-EFFECTS AGREGANDOLE COMO QUERY LAS PAGINAS, YA QUE POR CADA URL VIENEN 20 VIDEOJUEGOS, Y NECESITAMOS 100. 
 const baseUrl ="https://api.rawg.io/api/games?key=7766812f293742f8a1efa2ac33903b70";
 
-function Home({ getVideoGamesApi, videoGamesApi }) {
+function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
 
 
   // ESTE ESTADO LO VAMOS A UTILIZAR PARA GUARDAR LOS 100 VIDEOJUEGOS EN UN SOLO ARRAY, YA QUE EN MI ESTADO DE REDUX ME VIENEN DE A 20 VIDEOJUEGOS POR ARRAYS.
@@ -33,18 +33,28 @@ function Home({ getVideoGamesApi, videoGamesApi }) {
       const videogameUrl = baseUrl + `&page=${i}`;
       getVideoGamesApi(videogameUrl);
     }
-  }, [getVideoGamesApi]);
+
+    getVideoGamesDb()
+
+
+
+
+
+
+  }, [getVideoGamesApi,getVideoGamesDb]);
 
 
 
 // ESTE USE -EFFECT CONCATENA TODOS LOS ARRAYS DE MI ESTADO DE REDUX Y LOS ALMACENA EN EL ESTADO DE REACT videoGames
   useEffect(() => {
-    if (videoGamesApi.length > 4) {
+    if (videoGamesApi.length > 5) {
       let concatVideoGames = videoGamesApi[0].concat(
         videoGamesApi[1],
         videoGamesApi[2],
         videoGamesApi[3],
-        videoGamesApi[4]
+        videoGamesApi[4],
+        videoGamesApi[5],
+
       );
       // console.log(concatVideoGames)
 
@@ -56,21 +66,19 @@ function Home({ getVideoGamesApi, videoGamesApi }) {
 
 
   if (videoGames) {
-    // console.log(videoGames);
-
-
+    
 
     //FUNCION QUE VA A FILTRAR A LOS VIDEOJUEGOS SEGUN LO QUE EL USUARIO PIDA, EL FILTRADO SE ALMACENA EN videoGamesFilter
     
     const onSearch = (videojuego, state) => {
       let filtrado = state.filter((vg) =>
-        vg.name.toLowerCase().includes(videojuego)
+        vg.name.toLowerCase().includes(videojuego.toLowerCase())
       );
-      if (filtrado) {
-        console.log(state, videojuego);
+      if (filtrado.length > 0) {
+        // console.log(state, videojuego);
         setVideoGamesFilter(filtrado);
       } else {
-        console.log("No hay videojuego con ese ID");
+        alert("No hay videojuego con ese ID");
       }
     };
 
@@ -85,7 +93,16 @@ function Home({ getVideoGamesApi, videoGamesApi }) {
         />
         <button onClick={() => onSearch(character, videoGames)}>Agregar</button>
 
-        {videoGamesFilter && videoGamesFilter.map((vg) => <h2>{vg.name}</h2>)}
+        {videoGamesFilter && videoGamesFilter.map((vg) =>
+        
+        <div key={vg.id}>
+
+
+          <h2>{vg.name}</h2>
+          <img width={200} src={vg.background_image} alt={vg.name}/>
+          
+          
+          </div>)}
       </div>
     );
   } else {
@@ -108,6 +125,9 @@ const mapDispatchToProps = (dispatch) => {
     getVideoGamesApi: (url) => {
       dispatch(getVideoGamesApi(url));
     },
+    getVideoGamesDb: () => {
+      dispatch(getVideoGamesDb());
+    }
   };
 };
 
