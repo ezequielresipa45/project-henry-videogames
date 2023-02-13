@@ -56,7 +56,12 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
         videoGamesApi[5],
 
       );
-      console.log(concatVideoGames)
+      // console.log(concatVideoGames)
+
+
+      //SOME nos permite comprobar si alguno de los elementos de un array cumple una condición determinada.
+let prueba =  concatVideoGames.filter( videoGame => { return videoGame.genres.some( obj =>  obj.name === "RPG" )});
+    console.log( prueba )
 
       setVideoGames(concatVideoGames);
     }
