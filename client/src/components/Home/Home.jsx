@@ -175,6 +175,13 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
   }, [genre, videoGamesFilter])
 
 
+
+
+  let randomNumber = Math.random() * 5;
+
+Math.floor(randomNumber);
+
+
   if (videoGames) {
 
     //FUNCION QUE VA A FILTRAR A LOS VIDEOJUEGOS SEGUN LO QUE EL USUARIO PIDA, EL FILTRADO SE ALMACENA EN videoGamesFilter
@@ -225,6 +232,10 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
     }
 
 
+   
+
+
+
 
     return (
       <div>
@@ -273,6 +284,55 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
         </div>
 
         {videoGamesFilter && console.log(videoGamesFilter.slice(sliceStart, sliceEnd))}
+
+
+
+
+
+
+{!videoGamesFilter && 
+
+videoGamesApi[parseInt(randomNumber)].map(
+
+
+  (vg) =>
+  <Link to={`/detail/${vg.id}`} key={vg.id}>
+                <div
+  style={{backgroundColor:"red"}}
+                  key={vg.id}>
+  
+                  {/* {console.log(vg)} */}
+  
+                  <h2>{vg.name}</h2>
+  
+                  <img width={200} src={vg.background_image} alt={vg.name} />
+  
+  
+  
+                  {vg.genres && vg.genres.map(date => <h2 key={date.name}>{date.name}</h2>)}
+  
+                  <hr />
+  
+  
+                </div></Link>
+
+
+
+
+
+
+
+
+)
+
+
+
+
+}
+
+
+
+
 
 
         {

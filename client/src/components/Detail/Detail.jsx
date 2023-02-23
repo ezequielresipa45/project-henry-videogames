@@ -19,6 +19,8 @@ function Detail() {
 
     let hasMultipleDashes = false;
 
+// Esto comprueba si el argumento id contiene dos o más guiones. Si es así, la variable hasMultipleDashes tendrá un valor de true. Lo hago para saber si el ID recibido es el de la base de datos o de la api.
+
     if (id.match(/-+/g) !== null && id.match(/-+/g).length > 1) {
         hasMultipleDashes = true;
     }
