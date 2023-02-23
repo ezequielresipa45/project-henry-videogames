@@ -1,0 +1,80 @@
+.App {
+  background-color: #080f29;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.App .containerHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.App .containerHeader iframe {
+  pointer-events: none;
+}
+
+.App a {
+  text-decoration: none;
+}
+
+.App button {
+  cursor: pointer;
+  font-weight: 700;
+  font-family: Helvetica,"sans-serif";
+  transition: all .2s;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: #007aff;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+.App button:hover {
+  background: rgb(26, 24, 24);
+}
+
+.App button > svg {
+  width: 34px;
+  margin-left: 10px;
+  transition: transform .3s ease-in-out;
+   
+}
+
+.App button:hover svg {
+  transform: translateX(5px);
+}
+
+.App button:active {
+  transform: scale(0.95);
+}
+
+.App button > span {
+color: #fff;
+}
+
+
+.App .containerText {
+width: 50%;
+color: #fff;
+padding: 10px;
+box-shadow: inset 0 16px 15px rgba(40,61,252,0.2 );
+margin-bottom: 20px;
+
+}
+
+
+
+.App .text{
+  color: #4f6b95;
+    font-size: .75rem;
+    margin-bottom: 50px;
+}
