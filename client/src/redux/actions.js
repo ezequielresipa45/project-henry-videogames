@@ -20,6 +20,30 @@ export const getVideoGamesDb = () => {
   };
 };
 
+
+export const orderByAz = ()=> {
+  return{
+    type: "ORDER_BY_AZ"
+  }
+}
+
+export const orderByZa = ()=> {
+  return{
+    type: "ORDER_BY_ZA"
+  }
+}
+
+export const searchVideoGames = (name)=> {
+  return{
+    type: "SEARCH_VIDEO_GAMES",
+    payload: name,
+  }
+}
+
+
+
+
+
 /*
 export const addPersonaje = (name) => {
   return {
