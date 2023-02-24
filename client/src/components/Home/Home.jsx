@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { getVideoGamesApi, getVideoGamesDb } from "../../redux/actions";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import styles from "./Home.module.css";
+
 
 
 
@@ -232,8 +234,7 @@ Math.floor(randomNumber);
     }
 
 
-   
-
+    
 
 
 
@@ -241,7 +242,25 @@ Math.floor(randomNumber);
       <div>
 
 
-        <h2>SOY EL HOME</h2>
+        <div className={styles.containerHeader}>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <input
           type="search"
