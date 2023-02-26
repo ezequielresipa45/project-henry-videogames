@@ -24,7 +24,7 @@
   text-decoration: none;
 }
 
-.App button {
+.App .btn_app {
   cursor: pointer;
   font-weight: 700;
   font-family: Helvetica,"sans-serif";
@@ -38,7 +38,7 @@
   font-size: 15px;
 }
 
-.App button:hover {
+.App .btn_app:hover {
   background: rgb(26, 24, 24);
 }
 
@@ -49,15 +49,15 @@
    
 }
 
-.App button:hover svg {
+.App .btn_app:hover svg {
   transform: translateX(5px);
 }
 
-.App button:active {
+.App .btn_app:active {
   transform: scale(0.95);
 }
 
-.App button > span {
+.App .btn_app > span {
 color: #fff;
 }
 

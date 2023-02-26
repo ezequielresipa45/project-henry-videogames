@@ -23,7 +23,7 @@ const addGenresDb = require("../controllers/addGenresDb.controller");
 
 (async function traerDatosDeLaApi() {
   const data = await axios(
-    "https://api.rawg.io/api/genres?key=7766812f293742f8a1efa2ac33903b70"
+    "https://api.rawg.io/api/genres?key=28d152a4795c4f858cae0c606a326643"
   );
 
   let datosApis = data.data.results;

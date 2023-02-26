@@ -27,8 +27,8 @@ function App() {
           ></iframe>
 
           <Link to={`/home`}>
-            <button>
-              <span>ENTRAR A GAMER`S HAVEN</span>
+            <button className={styles.btn_app}>
+              <span>GO TO GAMER`S HAVEN</span>
               <svg
                 width="34"
                 height="34"

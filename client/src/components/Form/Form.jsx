@@ -33,7 +33,7 @@ const Form = () => {
   // ESTADO PARA GUARDAR DE AXIOS LOS DATOS DE LA API, QUE VAN A SER LOS GENEROS
   const [genreApi, setGenreApi] = useState();
 
-  useEffect(() => { axios.get("https://api.rawg.io/api/genres?key=7766812f293742f8a1efa2ac33903b70").then((response) => setGenreApi(response.data.results)) }, [])
+  useEffect(() => { axios.get("https://api.rawg.io/api/genres?key=28d152a4795c4f858cae0c606a326643").then((response) => setGenreApi(response.data.results)) }, [])
 
   const platforms = [
     "PC",

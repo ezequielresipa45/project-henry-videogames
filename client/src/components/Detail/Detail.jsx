@@ -30,7 +30,7 @@ function Detail() {
     useEffect(() => {
 
         if (!hasMultipleDashes) {
-            axios.get(`https://api.rawg.io/api/games/${id}?key=7766812f293742f8a1efa2ac33903b70`).then(response => {
+            axios.get(`https://api.rawg.io/api/games/${id}?key=28d152a4795c4f858cae0c606a326643`).then(response => {
 
                 setVideoGames(response.data)
 

@@ -4,38 +4,34 @@ import { useState, useEffect } from "react";
 import { getVideoGamesApi, getVideoGamesDb } from "../../redux/actions";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Slider from "infinite-react-carousel";
+import styles from "./Home.module.css";
+import logo from "../../images/logo.png"
+import search from "../../images/buscar.png"
+
+// URL BASE, LA UTILIZAMOS PARA ITERARLA EN UN USE-EFFECTS AGREGANDOLE COMO QUERY LAS PAGINAS, YA QUE POR CADA URL VIENEN 20 VIDEOJUEGOS, Y NECESITAMOS 100.
+const baseUrl =
+  "https://api.rawg.io/api/games?key=28d152a4795c4f858cae0c606a326643";
 
 
-
-// URL BASE, LA UTILIZAMOS PARA ITERARLA EN UN USE-EFFECTS AGREGANDOLE COMO QUERY LAS PAGINAS, YA QUE POR CADA URL VIENEN 20 VIDEOJUEGOS, Y NECESITAMOS 100. 
-const baseUrl = "https://api.rawg.io/api/games?key=7766812f293742f8a1efa2ac33903b70";
+  let arrayStars = ["⭐","⭐","⭐","⭐" ]
 
 function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
-
-
-
-
   // ESTE ESTADO LO VAMOS A UTILIZAR PARA GUARDAR LOS 100 VIDEOJUEGOS EN UN SOLO ARRAY, YA QUE EN MI ESTADO DE REDUX ME VIENEN DE A 20 VIDEOJUEGOS POR ARRAYS.
   const [videoGames, setVideoGames] = useState();
 
-
-
   // ESTADO PARA ALMACENAR LOS GENEROS FILTRADOS [RPG, ACTION, AVENTURE]
   const [genre, setGenre] = useState();
-
 
   // ESTADO QE ALMACENA SOLAMENTE LOS VIDEOJUEGOS DEMI BASE DE DATOS
 
   const [dbVideoGames, setDbVideoGames] = useState();
 
-
   // ESTADO PARA GUARDAR DE AXIOS LOS DATOS DE LA API, QUE VAN A SER LOS GENEROS
   const [genreApi, setGenreApi] = useState();
 
-
   // ESTE ESTADO LO UTILIZAREMOS PARA ALMACENAR EL VALOR QUE RECIBIMOS POR INPUT DEL USUARIO
   const [character, setcharacter] = useState();
-
 
   // ESTE ESTADO CONTENDRA EL LISTADO DE VIDEOJUEGOS SEGUN LO QUE EL USUARIO REQUIERA EN EL CAMPO INPUT DE BUSQUEDA DE VIDEOJUEGOS
   const [videoGamesFilter, setVideoGamesFilter] = useState();
@@ -43,19 +39,12 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
   // Almacena los videoJuegos filtrados por genero.
   const [videoGamesForGenre, setVideoGamesForGenre] = useState();
 
-
-
   // Estado para almacenar los valores del input order by, almacenara [ascendent, descendent, etc]
   const [value, setValue] = useState();
-
-
-
-
 
   // ESTADO PARA PAGINAR LOS VIDEOJUEGOS
 
   const [currentPage, setCurrentPage] = useState(1);
-
 
   const pageSize = 15;
 
@@ -63,35 +52,26 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
     setCurrentPage(currentPage + 1);
   };
 
-
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
   };
 
-
-
-
   const sliceStart = pageSize * (currentPage - 1);
   const sliceEnd = pageSize * currentPage;
-
 
   const handleValue = (e) => {
     setValue(e.target.value);
     // console.log(e.target.value);
-  }
-
-
+  };
 
   // HANDLER PARA SETEAR EL VALOR DEL ESTADO, ESTE ESTADO CONTIENE EL VALOR DEL INPUT PARA BUSCAR VIDEOJUEGOS.
   const handleNames = (e) => setcharacter(e.target.value);
 
-
   // HANDLER PARA ALMACENAR EN EL ESTADO GENRE, EL VALOR DEL INPUT QUE EL USUARIO SELECCIONE.
   const handleChange = (e) => {
     setGenre(e.target.value);
-    console.log(e.target.value)
+    console.log(e.target.value);
   };
-
 
   // ESTE USE-EFFECT LLAMA A NUESTRA ACTIONS getVideoGamesApi, ITERANDO 5 VECES PARA LLENAR EL ESTADO de REDUX DE ARRAYS CON VIDEOJUEGOS.
   useEffect(() => {
@@ -100,18 +80,18 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
       getVideoGamesApi(videogameUrl);
     }
 
-    getVideoGamesDb()
-
+    getVideoGamesDb();
   }, [getVideoGamesApi, getVideoGamesDb]);
-
-
-
 
   // use effect para traernos todos los generos y poder guardarlos en un estado para luego mapearlos en las options
 
-  useEffect(() => { axios.get("https://api.rawg.io/api/genres?key=7766812f293742f8a1efa2ac33903b70").then((response) => setGenreApi(response.data.results)) }, [])
-
-
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.rawg.io/api/genres?key=28d152a4795c4f858cae0c606a326643"
+      )
+      .then((response) => setGenreApi(response.data.results));
+  }, []);
 
   // ESTE USE-EFFECT CONCATENA TODOS LOS ARRAYS DE MI ESTADO DE REDUX Y LOS ALMACENA EN EL ESTADO DE REACT videoGames
   useEffect(() => {
@@ -121,105 +101,79 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
         videoGamesApi[2],
         videoGamesApi[3],
         videoGamesApi[4],
-        videoGamesApi[5],
-
+        videoGamesApi[5]
       );
       // console.log(concatVideoGames)
 
       setVideoGames(concatVideoGames);
-
-
-
     }
-
-
   }, [videoGamesApi]);
 
-
-
-
-
-
-  // USE EFFECT, FILTRADO DE VIDEOJUEGOS POR GENERO. 
+  // USE EFFECT, FILTRADO DE VIDEOJUEGOS POR GENERO.
   useEffect(() => {
-
     if (genre) {
-
       //SOME nos permite comprobar si alguno de los elementos de un array cumple una condición determinada.
-      setCurrentPage(1)
+      setCurrentPage(1);
 
-      if (genre === 'myVideoGames') {
-        setCurrentPage(100)
+      if (genre === "myVideoGames") {
+        setCurrentPage(100);
 
+        let filtradoBaseDeDatos = videoGamesFilter.filter((vg) =>
+          vg.hasOwnProperty("create")
+        );
 
-        let filtradoBaseDeDatos = videoGamesFilter.filter(vg => vg.hasOwnProperty("create"))
-
-
-        setDbVideoGames(filtradoBaseDeDatos)
-
+        setDbVideoGames(filtradoBaseDeDatos);
       } else {
-
-
-
-        let filtradoVideoGames = videoGamesFilter.filter(videoGame => { return videoGame.genres.some(obj => obj.name === genre) });
+        let filtradoVideoGames = videoGamesFilter.filter((videoGame) => {
+          return videoGame.genres.some((obj) => obj.name === genre);
+        });
         // console.log( filtradoVideoGames )
-        if (!filtradoVideoGames.length) { alert("NO HAY NADA CON ESE FILTRO") }
-        setVideoGamesForGenre(filtradoVideoGames)
-
-
+        if (!filtradoVideoGames.length) {
+          alert("NO HAY NADA CON ESE FILTRO");
+        }
+        setVideoGamesForGenre(filtradoVideoGames);
       }
-
-
     }
-
-  }, [genre, videoGamesFilter])
-
-
-
+  }, [genre, videoGamesFilter]);
 
   let randomNumber = Math.random() * 5;
 
-Math.floor(randomNumber);
-
+  Math.floor(randomNumber);
 
   if (videoGames) {
-
     //FUNCION QUE VA A FILTRAR A LOS VIDEOJUEGOS SEGUN LO QUE EL USUARIO PIDA, EL FILTRADO SE ALMACENA EN videoGamesFilter
 
     const onSearch = (videojuego, state) => {
-      setCurrentPage(1)
+      setCurrentPage(1);
       let filtrado = state.filter((vg) =>
         vg.name.toLowerCase().includes(videojuego.toLowerCase())
       );
       if (filtrado.length > 0) {
         // console.log(state, videojuego);
-        setGenre('')
+        setGenre("");
         setVideoGamesFilter(filtrado);
       } else {
         alert("No hay videojuego con ese ID");
       }
     };
 
-
-    if (genre && genre === 'ninguno') {
-
-      onSearch(character, videoGames)
+    if (genre && genre === "ninguno") {
+      onSearch(character, videoGames);
     }
-
 
     // FUNCION PARA ORDENAR DE LA A-Z - Z-A  || RATING ASC- RATING DESC
 
     function sortArray(array, value) {
-      if (value === 'ascendent') {
-        array.sort((a, b) => (a.name > b.name) ? 1 : -1);
-      } else if (value === 'descendent') {
-        array.sort((a, b) => (b.name > a.name) ? 1 : -1);
+      if (value === "ascendent") {
+        array.sort((a, b) => (a.name > b.name ? 1 : -1));
+      } else if (value === "descendent") {
+        array.sort((a, b) => (b.name > a.name ? 1 : -1));
       }
 
-      if (value === 'rating-asc') {
-        array.sort((a, b) => (b.rating > a.rating) ? 1 : -1);
-      } else if (value === 'rating-desc') {
-        array.sort((a, b) => (a.rating > b.rating) ? 1 : -1);
+      if (value === "rating-asc") {
+        array.sort((a, b) => (b.rating > a.rating ? 1 : -1));
+      } else if (value === "rating-desc") {
+        array.sort((a, b) => (a.rating > b.rating ? 1 : -1));
       }
     }
 
@@ -231,212 +185,300 @@ Math.floor(randomNumber);
       sortArray(videoGamesFilter, value);
     }
 
-
-   
-
-
-
-
     return (
       <div>
+        <div>
+          {/* <Slider className={styles.sliderImages}>
+
+{videoGames.slice(0, 5).map(image => <div key={image}>
+
+  <p className={styles.titleImages}>{image.name}</p>
+  <img  src={image.background_image} alt="img" />
 
 
-        <h2>SOY EL HOME</h2>
 
+</div>)}
+
+</Slider> */}
+
+          {videoGames && console.log(videoGames)}
+          <section className={styles.slider}>
+            <Slider className={styles.slider__content}>
+              {videoGames.slice(0, 5).map((image) => (
+                <div key={image.id} className={styles.slider__content__item}>
+                  <img src={image.background_image} alt={image.name} />
+
+                  <div className={styles.slider__content__descripction}>
+                    <p className={styles.slider__description__name}>
+                      {image.name}
+                    </p>
+
+                    <div className={styles.slider__content_rating__released}>
+                      <p className={styles.slider__description__rating}>
+                        <b>{image.rating}</b> / 5 {(Math.floor(image.rating) === 1 && arrayStars[0]) ||
+                        
+                        (Math.floor(image.rating) === 2 && arrayStars[0] + arrayStars[1]) || 
+
+                          (Math.floor(image.rating)=== 3 && arrayStars[0] + arrayStars[1] + arrayStars[2]) ||
+
+                          (Math.floor(image.rating) >= 4 && arrayStars[0] + arrayStars[1] + arrayStars[2] + arrayStars[3]) 
+                        } 
+                       
+                      </p>
+                      <p className={styles.slider__description__released}>
+                        {image.released} 📅
+                      </p>
+                    </div>
+
+                    <div className={styles.slider__content_genres__platforms}>
+                      <div className={styles.slider__content_genres}>
+                        {image.genres &&
+                          image.genres.map((gres) => (
+                            <p
+                            key={gres.name}
+                              className={
+                                styles.slider__description__genre__name
+                              }
+                            >
+                              {gres.name} 
+                            </p>
+                          ))}
+                      </div>
+
+                      <div className={styles.slider__content_platforms}>
+                        <p
+                          className={styles.slider__description__platform__name}
+                        >
+                          {image.platforms[0].platform.name}
+                        </p>
+                        <p
+                          className={styles.slider__description__platform__name}
+                        >
+                        {image.platforms[1].platform.name}
+                        </p>
+                      </div>
+
+
+
+
+                    </div>
+                      <Link  className={styles.container__slider__btn} to={`/detail/${image.id}`} key={image.id}>  Go To Game 🎮 </Link>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </section>
+        </div>
+
+
+
+<div  className={styles.container__search__filters}>
+
+
+
+
+<div className={styles.container__input__search} >
+<img src={logo} alt="Logo"  width={200}/>
         <input
           type="search"
           onChange={handleNames}
-          placeholder="Ingrese un nombre en minuscula.."
+          placeholder="Search 876,200 games"
+          className={styles.input__search}
         />
-        <button onClick={() => onSearch(character, videoGames)}>Buscar</button>
+        <button onClick={() => onSearch(character, videoGames)}><img src={search} alt="SearchIcon"  /> </button>
+
+
+</div>
+
+
+<h1>New and trending</h1>
+<h4>Based on player counts and release date</h4>
 
 
         <div>
           <label htmlFor="">Filtrar por: </label>
           <select value={genre} onChange={handleChange} defaultValue="default">
-            <option value="default" disabled>Generos</option>
-            <option value="ninguno" >Ninguno</option>
-            <option value="myVideoGames" >My VideoGames</option>
+            <option value="default" disabled>
+              Generos
+            </option>
+            <option value="ninguno">Ninguno</option>
+            <option value="myVideoGames">My VideoGames</option>
 
-            {genreApi && genreApi.map(gnre => (
-              <option key={gnre.name} value={gnre.name}>{gnre.name}</option>
-            ))}
+            {genreApi &&
+              genreApi.map((gnre) => (
+                <option key={gnre.name} value={gnre.name}>
+                  {gnre.name}
+                </option>
+              ))}
           </select>
         </div>
 
-
-
         <div>
-
           <label> Order by: </label>
 
-          <select value={value} onChange={handleValue} defaultValue="default" >
+          <select value={value} onChange={handleValue} defaultValue="default">
             <option value="default" disabled></option>
             <option value="ascendent">A-Z</option>
             <option value="descendent">Z-A</option>
             <option value="rating-asc">Rating Ascendente</option>
             <option value="rating-desc">Rating Descendente</option>
-
           </select>
-
-
-
         </div>
 
-        {videoGamesFilter && console.log(videoGamesFilter.slice(sliceStart, sliceEnd))}
+
+
+</div>
 
 
 
+        {videoGamesFilter &&
+          console.log(videoGamesFilter.slice(sliceStart, sliceEnd))}
 
-
-
-{!videoGamesFilter && 
-
-videoGamesApi[parseInt(randomNumber)].map(
-
-
-  (vg) =>
-  <Link to={`/detail/${vg.id}`} key={vg.id}>
-                <div
-  style={{backgroundColor:"red"}}
-                  key={vg.id}>
-  
-                  {/* {console.log(vg)} */}
-  
-                  <h2>{vg.name}</h2>
-  
-                  <img width={200} src={vg.background_image} alt={vg.name} />
-  
-  
-  
-                  {vg.genres && vg.genres.map(date => <h2 key={date.name}>{date.name}</h2>)}
-  
-                  <hr />
-  
-  
-                </div></Link>
-
-
-
-
-
-
-
-
-)
-
-
-
-
-}
-
-
-
-
-
-
-        {
-
-
-          !genre ?
-
-            videoGamesFilter && videoGamesFilter.slice(sliceStart, sliceEnd).map((vg) =>
-<Link to={`/detail/${vg.id}`} key={vg.id}>
-              <div
-style={{backgroundColor:"red"}}
-                key={vg.id}>
-
+        {!videoGamesFilter &&
+          videoGamesApi[1].map((vg) => (
+            <Link to={`/detail/${vg.id}`} key={vg.id}>
+              <div style={{ backgroundColor: "red" }} key={vg.id}>
                 {/* {console.log(vg)} */}
 
                 <h2>{vg.name}</h2>
 
                 <img width={200} src={vg.background_image} alt={vg.name} />
 
-
-
-                {vg.genres && vg.genres.map(date => <h2 key={date.name}>{date.name}</h2>)}
+                {vg.genres &&
+                  vg.genres.map((date) => <h2 key={date.name}>{date.name}</h2>)}
 
                 <hr />
+              </div>
+            </Link>
+          ))}
 
-
-              </div></Link>)
-
-            :
-
-            (genre !== 'myVideoGames' && videoGamesForGenre) && videoGamesForGenre.slice(sliceStart, sliceEnd).map(vg =>
-
-
+        {!genre
+          ? videoGamesFilter &&
+            videoGamesFilter.slice(sliceStart, sliceEnd).map((vg) => (
               <Link to={`/detail/${vg.id}`} key={vg.id}>
-              <div key={vg.id}>
+                <div style={{ backgroundColor: "red" }} key={vg.id}>
+                  {/* {console.log(vg)} */}
 
+                  <h2>{vg.name}</h2>
 
+                  <img width={200} src={vg.background_image} alt={vg.name} />
+
+                  {vg.genres &&
+                    vg.genres.map((date) => (
+                      <h2 key={date.name}>{date.name}</h2>
+                    ))}
+
+                  <hr />
+                </div>
+              </Link>
+            ))
+          : genre !== "myVideoGames" &&
+            videoGamesForGenre &&
+            videoGamesForGenre.slice(sliceStart, sliceEnd).map((vg) => (
+              <Link to={`/detail/${vg.id}`} key={vg.id}>
+                <div key={vg.id}>
+                  <h2>{vg.name}</h2>
+
+                  <img width={200} src={vg.background_image} alt={vg.name} />
+
+                  {vg.genres &&
+                    vg.genres.map((date) => (
+                      <h2 key={date.name}>{date.name}</h2>
+                    ))}
+
+                  <hr />
+                </div>
+              </Link>
+            ))}
+
+        {dbVideoGames &&
+          dbVideoGames.map((vg) => (
+            <Link to={`/detail/${vg.id}`} key={vg.id}>
+              <div
+                className="dbVideoGames"
+                style={
+                  genre !== "myVideoGames"
+                    ? { display: "none" }
+                    : { display: "block" }
+                }
+                key={vg.id}
+              >
                 <h2>{vg.name}</h2>
 
                 <img width={200} src={vg.background_image} alt={vg.name} />
 
-
-                {vg.genres && vg.genres.map(date => <h2 key={date.name}>{date.name}</h2>)}
+                {vg.genres &&
+                  vg.genres.map((date) => <h2 key={date.name}>{date.name}</h2>)}
 
                 <hr />
-
-
-              </div></Link>
-
-            )
-
-        }
-
-        {dbVideoGames && dbVideoGames.map((vg) =>
-
-
-              <Link to={`/detail/${vg.id}`} key={vg.id}>
-
-          <div className="dbVideoGames"
-            style={genre !== 'myVideoGames' ? { display: 'none' } : { display: 'block' }}
-
-            key={vg.id}>
-
-            <h2>{vg.name}</h2>
-
-            <img width={200} src={vg.background_image} alt={vg.name} />
-
-
-
-            {vg.genres && vg.genres.map(date => <h2 key={date.name}>{date.name}</h2>)}
-
-            <hr />
-
-
-          </div> </Link>)}
+              </div>{" "}
+            </Link>
+          ))}
 
         {videoGamesFilter && (
-          <div className="MostrarMasVideoGamesFilter"
-            style={videoGamesForGenre ? { display: "none" } : { display: "block", backgroundColor: 'red' }}
+          <div
+            className="MostrarMasVideoGamesFilter"
+            style={
+              videoGamesForGenre
+                ? { display: "none" }
+                : { display: "block", backgroundColor: "red" }
+            }
           >
-            <button className="btn-anterior" style={currentPage === 1 || genre === 'myVideoGames' ? { display: "none" } : { display: 'inline-block' }} onClick={handlePrevPage}>Anterior</button>
-            <button className="btn-siguiente" style={videoGamesFilter.length > sliceEnd ? { display: "inline-block" } : { display: 'none' }} onClick={handleNextPage}>Siguiente</button>
+            <button
+              className="btn-anterior"
+              style={
+                currentPage === 1 || genre === "myVideoGames"
+                  ? { display: "none" }
+                  : { display: "inline-block" }
+              }
+              onClick={handlePrevPage}
+            >
+              Anterior
+            </button>
+            <button
+              className="btn-siguiente"
+              style={
+                videoGamesFilter.length > sliceEnd
+                  ? { display: "inline-block" }
+                  : { display: "none" }
+              }
+              onClick={handleNextPage}
+            >
+              Siguiente
+            </button>
             <hr />
-
-
           </div>
         )}
-
 
         {videoGamesForGenre && (
-          <div
-          >
-            <button className="btn-anterior" style={currentPage === 1 || genre === 'myVideoGames' ? { display: "none" } : { display: 'inline-block' }} onClick={handlePrevPage}>Anterior</button>
-            <button className="btn-siguiente" style={videoGamesForGenre.length > sliceEnd ? { display: "inline-block" } : { display: 'none' }} onClick={handleNextPage}>Siguiente</button>
+          <div>
+            <button
+              className="btn-anterior"
+              style={
+                currentPage === 1 || genre === "myVideoGames"
+                  ? { display: "none" }
+                  : { display: "inline-block" }
+              }
+              onClick={handlePrevPage}
+            >
+              Anterior
+            </button>
+            <button
+              className="btn-siguiente"
+              style={
+                videoGamesForGenre.length > sliceEnd
+                  ? { display: "inline-block" }
+                  : { display: "none" }
+              }
+              onClick={handleNextPage}
+            >
+              Siguiente
+            </button>
             <hr />
-
-
           </div>
         )}
-
       </div>
-
     );
-
   } else {
     return (
       <div>
@@ -459,9 +501,8 @@ const mapDispatchToProps = (dispatch) => {
     },
     getVideoGamesDb: () => {
       dispatch(getVideoGamesDb());
-    }
+    },
   };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
