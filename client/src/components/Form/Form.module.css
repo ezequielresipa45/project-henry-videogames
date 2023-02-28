@@ -27,7 +27,7 @@
 .form {
   background-color: #212121ba;
   width: 50%;
-  z-index: 655665115656;
+  z-index: 17000;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -129,6 +129,22 @@ input[type="url"]:hover {
 }
 
 .errors {
+  background-color: red;
+  padding: 1rem;
+  color: #fff;
+  border-radius: 0.5rem;
+}
+
+
+.vgCreado{
+  background-color: rgb(50, 220, 112);
+  padding: 1rem;
+  color: #fff;
+  border-radius: 0.5rem;
+}
+
+
+.vgNoCreado{
   background-color: red;
   padding: 1rem;
   color: #fff;

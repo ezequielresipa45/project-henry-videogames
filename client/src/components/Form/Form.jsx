@@ -1,8 +1,7 @@
 // importar las dependencias necesarias
 import React, { useState, useEffect } from "react";
 import styles from "./Form.module.css";
-
-import axios from "axios";
+  import axios from "axios";
 import {
   isValidURL,
   isValidDate,
@@ -31,6 +30,10 @@ function validate(inputs) {
 const Form = () => {
 
   const [rangeValue, setRangeValue] = useState(1);
+
+
+  // Validador para cuando creo el videojuego
+  const [creado, setCreado] = useState("");
 
   // ESTADO PARA GUARDAR DE AXIOS LOS DATOS DE LA API, QUE VAN A SER LOS GENEROS
   const [genreApi, setGenreApi] = useState();
@@ -160,8 +163,11 @@ const Form = () => {
       );
       console.log(formData);
       console.log(response.data);
+      setCreado('creado')
+
     } catch (error) {
       console.error(error.message);
+      setCreado("no-creado")
     }
 
     console.log(formData);
@@ -308,7 +314,11 @@ const Form = () => {
         </div>
         {Object.keys(errors).length === 0 && formData.platforms.length !== 0 && formData.genres.length !== 0 && (
           <button className={styles.btn__submit} type="submit">Create</button>
-        )}
+          )}
+
+          {creado === "creado" && <p className={styles.vgCreado }>VideoGame create!!!</p>}
+          {creado === "no-creado" && <p className={styles.vgNoCreado }>VideoGame has not create!!!</p>}
+
       </form>
 
 
