@@ -136,7 +136,8 @@ z-index: 1005;
 font-size: 20px;
 	color: #fff;
 	border: 0;
-    cursor: pointer;
+  cursor: pointer;
+
     padding: .5rem 2rem;
     display: inline-block;
     vertical-align: top;
@@ -166,6 +167,9 @@ font-size: 20px;
 
 .container__input__search img{
 	margin-right: 6rem;
+  cursor: pointer
+
+  
 }
 
 .container__input__search button{
@@ -216,7 +220,6 @@ font-size: 72px;
 line-height: 74px;
 font-weight: 700;
 text-align: left;
-width:80rem;
 margin: 0px;
 padding-left: 4.5rem;
 
@@ -226,7 +229,7 @@ h4{
 width: 20rem;
 	color: #fff;
 	font-size: 16px;
-margin-left:5.5rem;
+  margin-left: 4.7rem;
 }
 
 
@@ -434,6 +437,7 @@ margin-left: 45px;
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  margin-right: 6rem;
  }
 
 
@@ -451,17 +455,15 @@ display: flex;
 align-items: center;
 flex-direction: column;
 margin-bottom: 2rem;
-transition: 1s;
-
-
+position: relative;
+transition: all .3s;
  }
 
 
 
 
  .container__card__videoGame:hover{
-  position: relative;
-bottom: 5px;
+  transform: scale(0.9);
  }
 
 
@@ -483,6 +485,7 @@ bottom: 5px;
   padding: 0 0.7rem;
   text-align: left;
   width: 73%;
+  font-size: 22px;
   
  }
 
@@ -557,4 +560,80 @@ padding: 0;
  hr{
   border-color: #293343a0;
   width: 73%;
+ }
+
+
+ 
+
+
+ .btn__card {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 10px;
+  padding: 16px;
+  width: 130px;
+  transition: all 0.5s;
+  cursor: pointer;
+
+  margin-left: 10rem;
+  margin-top: 0.7rem;
+ }
+ 
+ .btn__card span {
+  cursor: pointer;
+
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+ }
+ 
+ .btn__card span:after {
+  content: '»';
+  position: absolute;
+  opacity: 1;
+  top: 0;
+  right: -15px;
+  transition: 0.5s;
+ }
+ 
+ .btn__card:hover span {
+  padding-right: 15px;
+  color: #eeaf0a;
+ }
+ 
+ .btn__card:hover span:after {
+  opacity: 1;
+  right: 0;
+ }
+
+ .MostrarMasVideoGamesFilter, .MostrarMasVideoGames{
+  display: flex;
+  justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    gap: 15rem;
+ }
+ 
+ .MostrarMasVideoGamesFilter button, .MostrarMasVideoGames button{
+ gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: #080a17;
+    color: var(--grey);
+    border-radius: 0.5rem;
+    color: #fff;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+ }
+
+
+ .MostrarMasVideoGamesFilter button:hover, .MostrarMasVideoGames button:hover{
+  background-color: #3989ea;
  }
