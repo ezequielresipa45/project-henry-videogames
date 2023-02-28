@@ -1,0 +1,136 @@
+.container__form {
+  background-image: url("https://media.rawg.io/media/games/62c/62c7c8b28a27b83680b22fb9d33fc619.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 5rem 0;
+  position: relative;
+}
+
+.container__form::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #080f29),
+    linear-gradient(to bottom, #080f29, rgba(255, 255, 255, 0));
+  z-index: 1000;
+}
+
+.form {
+  background-color: #212121ba;
+  width: 50%;
+  z-index: 655665115656;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  margin: 0 0 10rem 0;
+  height: 85rem;
+}
+
+.container__form h1 {
+  color: rgb(255, 255, 255);
+  z-index: 15565;
+  text-align: center;
+  margin: 0;
+  padding: 5rem 1rem;
+}
+
+.container__platforms {
+  padding: 1rem;
+  display: flex;
+  height: 10rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  overflow: scroll;
+  margin: 2rem;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+}
+
+.container__platforms__div__input {
+  background-color: rgba(250, 250, 250, 0.492);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 14rem;
+}
+
+.container__platforms::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+}
+
+.container__genres {
+  display: none;
+}
+
+.form hr {
+  border-color: #ffffffae;
+  width: 70%;
+}
+
+.form h2 {
+  margin: 0;
+  color: #fff;
+  padding: 0;
+  font-size: 40px;
+  text-align: center;
+}
+
+.form input[type="text"],
+input[type="url"] {
+  width: 70%;
+  height: 54px;
+  border-radius: 5px;
+  background: white;
+  margin-bottom: 15px;
+  border: none;
+  padding: 0 20px;
+  font-weight: 300;
+  font-size: 14px;
+  color: #4b4b4b;
+}
+
+.form input[type="text"]:hover,
+input[type="url"]:hover {
+  transform: scale(1.009);
+  box-shadow: 0px 0px 3px 0px #212529;
+}
+
+.form .btn__submit {
+  width: 70%;
+  height: 54px;
+  font-size: 14px;
+  color: white;
+  background: red;
+  border-radius: 5px;
+  border: none;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.container__input__range {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  color: #fff;
+  width: 100%;
+}
+
+.errors {
+  background-color: red;
+  padding: 1rem;
+  color: #fff;
+  border-radius: 0.5rem;
+}

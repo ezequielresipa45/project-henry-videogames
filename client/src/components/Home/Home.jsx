@@ -10,6 +10,8 @@ import logo from "../../images/logo.png";
 import search from "../../images/buscar.png";
 import flecha_izquierda from "../../images/flecha-izquierda.png"
 import flecha_derecha from "../../images/flecha-derecha.png"
+import Swal from 'sweetalert2'
+
 
 // URL BASE, LA UTILIZAMOS PARA ITERARLA EN UN USE-EFFECTS AGREGANDOLE COMO QUERY LAS PAGINAS, YA QUE POR CADA URL VIENEN 20 VIDEOJUEGOS, Y NECESITAMOS 100.
 const baseUrl =
@@ -18,6 +20,11 @@ const baseUrl =
 let arrayStars = ["⭐", "⭐", "⭐", "⭐"];
 
 function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
+
+
+
+  const redirijir = (time) => { setTimeout(function (time) { window.location.href = '/home' }, time) }
+
   // ESTE ESTADO LO VAMOS A UTILIZAR PARA GUARDAR LOS 100 VIDEOJUEGOS EN UN SOLO ARRAY, YA QUE EN MI ESTADO DE REDUX ME VIENEN DE A 20 VIDEOJUEGOS POR ARRAYS.
   const [videoGames, setVideoGames] = useState();
 
@@ -130,7 +137,12 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
         });
         // console.log( filtradoVideoGames )
         if (!filtradoVideoGames.length) {
-          alert("NO HAY NADA CON ESE FILTRO");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'There are no video games with that filter!! Redirecting to home..',
+          })
+          redirijir(3000)
         }
         setVideoGamesForGenre(filtradoVideoGames);
       }
@@ -154,7 +166,11 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
         setGenre("");
         setVideoGamesFilter(filtrado);
       } else {
-        alert("No hay videojuego con ese ID");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'The game doesn`t exist!, Try again please!! ',
+        })
       }
     };
 

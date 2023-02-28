@@ -1,5 +1,7 @@
 // importar las dependencias necesarias
 import React, { useState, useEffect } from "react";
+import styles from "./Form.module.css";
+
 import axios from "axios";
 import {
   isValidURL,
@@ -28,7 +30,7 @@ function validate(inputs) {
 
 const Form = () => {
 
-    const [rangeValue, setRangeValue] = useState(1);
+  const [rangeValue, setRangeValue] = useState(1);
 
   // ESTADO PARA GUARDAR DE AXIOS LOS DATOS DE LA API, QUE VAN A SER LOS GENEROS
   const [genreApi, setGenreApi] = useState();
@@ -112,10 +114,10 @@ const Form = () => {
   const [values, setValues] = useState([]);
 
 
-  const handleChangeRating = (e) =>{
+  const handleChangeRating = (e) => {
 
     setRangeValue(e.target.value);
-    setFormData({ ...formData, rating:  parseFloat(rangeValue) })
+    setFormData({ ...formData, rating: parseFloat(rangeValue) })
 
 
 
@@ -175,113 +177,144 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        required
-        value={formData.name}
-        placeholder="Name VideoGame"
-        onChange={handleChange}
-      />
-      {errors.name && <p>{errors.name}</p>}
 
-      <input
-        type="text"
-        name="description"
-        required
-        value={formData.description}
-        placeholder="description"
-        onChange={handleChange}
-      />
-      {errors.description && <p>{errors.description}</p>}
+    <div className={styles.container__form}>
 
-      <input
-        type="text"
-        name="released"
-        required
-        value={formData.released}
-        placeholder="Example: 2005-05-22"
-        onChange={handleChange}
-      />
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h1>Add To VideoGame</h1>
+        <input
+          type="text"
+          autoComplete="nop"
+          name="name"
+          required
+          value={formData.name}
+          placeholder="Name VideoGame"
+          onChange={handleChange}
+        />
+        {errors.name && <p className={styles.errors}>{errors.name}</p>}
 
-      {errors.released && <p>{errors.released}</p>}
+        <input
+          type="text"
+          autoComplete="nop"
 
-      <input
-        type="url"
-        name="background_image"
-        required
-        value={formData.background_image}
-        placeholder="background_image"
-        accept="image/jpeg"
-        multiple
-        onChange={handleChange}
-      />
-      {errors.background_image && <p>{errors.background_image}</p>}
+          name="description"
+          required
+          value={formData.description}
+          placeholder="Description"
+          onChange={handleChange}
+        />
+        {errors.description && <p className={styles.errors}>{errors.description}</p>}
 
+        <input
+          type="text"
+          name="released"
+          autoComplete="nop"
 
+          required
+          value={formData.released}
+          placeholder="Example: 2005-05-22"
+          onChange={handleChange}
+        />
 
-<div>
+        {errors.released && <p className={styles.errors}>{errors.released}</p>}
 
-      <input
-  type="range"
-  name="rating"
-  min={1}
-  max={10}
-  step={0.1}
-  value={rangeValue}
-  onChange={handleChangeRating}
-/>
-<p>Valor actual: {rangeValue}</p>
+        <input
+          type="url"
+          name="background_image"
+          autoComplete="nop"
+
+          required
+          value={formData.background_image}
+          placeholder="Insert URL image"
+          accept="image/jpeg"
+          multiple
+          onChange={handleChange}
+        />
+        {errors.background_image && <p className={styles.errors}>{errors.background_image}</p>}
 
 
 
-</div>
+        <div className={styles.container__input__range}>
 
-
-      {platforms &&
-        platforms.map((plform) => (
-          <div key={plform}>
-            <input
-              type="checkbox"
-              name="platforms"
-              value={plform}
-              onChange={handleChangeCheckBox}
-            />{" "}
-            {plform}
-            <br />
-          </div>
-        ))}
-
-      <div>
-        
-
-
-{genreApi && genreApi.map(genre => 
-
-
-<div key={genre.name}>
-            <input
-            
-              type="checkbox"
-              name={genre.name}
-              value={genre.name}
-              onChange={changeValue}
-            />{" "}
-            {genre.name}
-            <br />
-          </div>)
-
-}
+          <input
+            type="range"
+            name="rating"
+            min={1}
+            max={10}
+            step={0.1}
+            value={rangeValue}
+            onChange={handleChangeRating}
+          />
+          <p>Rating: {rangeValue}</p>
 
 
 
-        
-      </div>
-      {Object.keys(errors).length === 0 && formData.platforms.length !== 0 && formData.genres.length !== 0 && (
-        <button type="submit">Create</button>
-      )}
-    </form>
+        </div>
+
+
+
+        <hr />
+        <h2>Platforms 🎮 </h2>
+        <hr />
+        <div className={styles.container__platforms}>
+          {platforms &&
+            platforms.map((plform) => (
+              <div key={plform} className={styles.container__platforms__div__input}  >
+                <input
+                  type="checkbox"
+                  name="platforms"
+                  value={plform}
+                  onChange={handleChangeCheckBox}
+                />{" "}
+                {plform}
+                <br />
+              </div>
+            ))}
+        </div>
+
+
+
+
+
+        <hr />
+        <h2>Genres</h2>
+        <hr />
+
+
+        <div className={styles.container__platforms}>
+
+
+
+          {genreApi && genreApi.map(genre =>
+
+
+            <div key={genre.name} className={styles.container__platforms__div__input}>
+              <input
+
+                type="checkbox"
+                name={genre.name}
+                value={genre.name}
+                onChange={changeValue}
+              />{" "}
+              {genre.name}
+              <br />
+            </div>)
+
+          }
+
+
+
+
+        </div>
+        {Object.keys(errors).length === 0 && formData.platforms.length !== 0 && formData.genres.length !== 0 && (
+          <button className={styles.btn__submit} type="submit">Create</button>
+        )}
+      </form>
+
+
+    </div>
+
+
   );
 };
 
