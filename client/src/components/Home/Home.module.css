@@ -617,6 +617,11 @@ padding: 0;
     padding: 1rem;
     gap: 15rem;
  }
+
+ .MostrarMasVideoGamesFilter h2, .MostrarMasVideoGames h2{
+
+  color: #fff;
+ }
  
  .MostrarMasVideoGamesFilter button, .MostrarMasVideoGames button{
  gap: 1rem;

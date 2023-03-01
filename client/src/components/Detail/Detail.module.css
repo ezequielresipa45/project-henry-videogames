@@ -1,0 +1,333 @@
+/***************************************************/
+
+
+.spinner{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  
+  
+  
+  .loader {
+    --path: #f6f6f6;
+    --dot: #3685f1;
+    --duration: 3s;
+    width: 44px;
+    height: 44px;
+    position: relative;
+  }
+  
+  .loader:before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: absolute;
+    display: block;
+    background: var(--dot);
+    top: 37px;
+    left: 19px;
+    transform: translate(-18px, -18px);
+    animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+  
+  .loader svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .loader svg rect, .loader svg polygon, .loader svg circle {
+    fill: none;
+    stroke: var(--path);
+    stroke-width: 10px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  
+  .loader svg polygon {
+    stroke-dasharray: 145 76 145 76;
+    stroke-dashoffset: 0;
+    animation: pathTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+  
+  .loader svg rect {
+    stroke-dasharray: 192 64 192 64;
+    stroke-dashoffset: 0;
+    animation: pathRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+  
+  .loader svg circle {
+    stroke-dasharray: 150 50 150 50;
+    stroke-dashoffset: 75;
+    animation: pathCircle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+  
+  .loader.triangle {
+    width: 48px;
+  }
+  
+  .loader.triangle:before {
+    left: 21px;
+    transform: translate(-10px, -18px);
+    animation: dotTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+  
+  @keyframes pathTriangle {
+    33% {
+      stroke-dashoffset: 74;
+    }
+  
+    66% {
+      stroke-dashoffset: 147;
+    }
+  
+    100% {
+      stroke-dashoffset: 221;
+    }
+  }
+  
+  @keyframes dotTriangle {
+    33% {
+      transform: translate(0, 0);
+    }
+  
+    66% {
+      transform: translate(10px, -18px);
+    }
+  
+    100% {
+      transform: translate(-10px, -18px);
+    }
+  }
+  
+  @keyframes pathRect {
+    25% {
+      stroke-dashoffset: 64;
+    }
+  
+    50% {
+      stroke-dashoffset: 128;
+    }
+  
+    75% {
+      stroke-dashoffset: 192;
+    }
+  
+    100% {
+      stroke-dashoffset: 256;
+    }
+  }
+  
+  @keyframes dotRect {
+    25% {
+      transform: translate(0, 0);
+    }
+  
+    50% {
+      transform: translate(18px, -18px);
+    }
+  
+    75% {
+      transform: translate(0, -36px);
+    }
+  
+    100% {
+      transform: translate(-18px, -18px);
+    }
+  }
+  
+  @keyframes pathCircle {
+    25% {
+      stroke-dashoffset: 125;
+    }
+  
+    50% {
+      stroke-dashoffset: 175;
+    }
+  
+    75% {
+      stroke-dashoffset: 225;
+    }
+  
+    100% {
+      stroke-dashoffset: 275;
+    }
+  }
+  
+  .loader {
+    display: inline-block;
+    margin: 0 16px;
+  }
+  
+   /**********************************************************/
+
+
+   .container_videoGame{
+    width: 100%;
+    height: 80vh;
+   }
+
+   .container_image{
+    width: 100%;
+    height: 80vh;
+    position: relative;
+    filter: blur(1.5px);
+
+   }
+
+   .container_image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+   }
+
+
+
+   .container_image::before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+     /* background: linear-gradient(rgba(255, 255, 255, 0),#080f29); */
+     background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #080f29),
+     linear-gradient(to bottom, #080f29, rgba(255, 255, 255, 0));
+    z-index: 1000;
+
+   }
+
+
+
+
+   .container_info_videoGame{
+
+
+    position: absolute;
+    width: 80%;
+    height: 400px;
+    
+    /* background-color: red; */
+    gap: 2rem;
+    bottom: 2rem;
+    left: 8rem;
+  z-index: 1005;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+
+   }
+
+   .container_info_videoGame img{
+    width: 20rem;
+    border-radius: .5rem;
+    margin-top: 3.5rem;
+height: 10rem;
+   }
+
+
+   .container_info_videoGame_text{
+    /* background-color: violet; */
+    height: 400px;
+  color: #fff;
+
+   }
+
+   .container_info_videoGame_text h2{
+    margin: 0;
+   }
+
+   .container_info_videoGame_text__platforms{
+    /* background-color: yellow; */
+    display: flex;
+   }
+
+   .container_info_videoGame_text__genres{
+    display: flex;
+    background-color: pink;
+   }
+
+   .container__rating__released{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+   }
+
+.container_info_videoGame_text__rating{
+    text-align: left;
+    color: #eeaf0a;
+
+
+}
+
+
+
+.container__platforms__genres{
+	display: flex;
+	align-items: center;
+	gap: 25px;
+	margin-bottom: 20px;
+	font-size: 12px;
+    line-height: normal;
+    font-weight: 400;
+}
+
+
+
+.container_info_videoGame_text__genres{
+	display: flex;
+	gap: 10px;
+	padding: 0;
+	border-radius: 2px;
+	font-size: 10px;
+    line-height: normal;
+    font-weight: 400;
+    padding: 2px 7.5px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #000;
+    border-radius: 4px;
+    background-color: #fff;
+
+}
+
+
+.container_info_videoGame_text__platforms{
+	display: flex;
+	gap: 20px;
+	color: #fff;
+	font-weight: bold;
+
+}
+
+.container__description{
+    height: 8rem;
+  overflow: scroll;
+
+
+
+}
+
+.nav_button{
+	background-color: #3e87fc91;
+font-size: 20px;
+	color: #fff;
+	border: 0;
+  cursor: pointer;
+
+    padding: .2rem 1rem;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    line-height: 2rem;
+    width: auto;
+    border-radius: 1rem;
+
+}

@@ -50,6 +50,10 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
   // Estado para almacenar los valores del input order by, almacenara [ascendent, descendent, etc]
   const [value, setValue] = useState();
 
+
+
+
+
   // ESTADO PARA PAGINAR LOS VIDEOJUEGOS
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -221,7 +225,7 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
           {videoGames && console.log(videoGames)}
           <section className={styles.slider}>
             <Slider className={styles.slider__content}>
-              {videoGames.slice(0, 5).map((image) => (
+              {videoGames.slice(5, 10).map((image) => (
                 <div key={image.id} className={styles.slider__content__item}>
                   <img src={image.background_image} alt={image.name} />
 
@@ -319,7 +323,7 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
                 onChange={handleChange}
                 defaultValue="default"
               >
-                <option value="default" disabled>
+                <option value="default" >
                   Generos
                 </option>
                 <option value="myVideoGames">My VideoGames</option>
@@ -401,7 +405,7 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
           </div>
         )}
 
-        {!genre
+        {!genre 
           ? videoGamesFilter && (
               <div>
                 <h1>{`VideoGames "${character}"`}</h1>
@@ -498,7 +502,7 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
               </div>
             )}
 
-        {dbVideoGames && (
+        {(dbVideoGames && genre === "myVideoGames")  && (
           <div>
             <h1>{`VideoGames "${character}" - My VideoGames`}</h1>
             <h4>Based on player counts and release date</h4>
@@ -590,6 +594,14 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
 <img src={flecha_izquierda} width = {15} alt="arrow" />
               Previous page
             </button>
+
+
+
+            <h2 style={genre === "myVideoGames" ? {display: "none"} : {display: "block"}}>📄{currentPage}</h2>
+
+
+
+
             <button className="btn-siguiente"
               style={
                 videoGamesFilter.length > sliceEnd
@@ -608,6 +620,7 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
 
         {videoGamesForGenre && (
           <div className={styles.MostrarMasVideoGames}>
+            
 
             <button
               className="btn-anterior"
@@ -620,8 +633,12 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
             >
            <img src={flecha_izquierda} width = {15} alt="arrow" />
               Previous page
-
             </button>
+
+          
+            <h2 style={genre === "myVideoGames" ? {display: "none"} : {display: "block"}}>📄{currentPage}</h2>
+
+
             <button
               className="btn-siguiente"
               style={
