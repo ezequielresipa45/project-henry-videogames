@@ -1,7 +1,7 @@
 // importar las dependencias necesarias
 import React, { useState, useEffect } from "react";
 import styles from "./Form.module.css";
-  import axios from "axios";
+import axios from "axios";
 import {
   isValidURL,
   isValidDate,
@@ -28,9 +28,13 @@ function validate(inputs) {
 }
 
 const Form = () => {
+  const redirijir = (time) => {
+    setTimeout(function (time) {
+      window.location.href = "/home";
+    }, time);
+  };
 
   const [rangeValue, setRangeValue] = useState(1);
-
 
   // Validador para cuando creo el videojuego
   const [creado, setCreado] = useState("");
@@ -38,7 +42,13 @@ const Form = () => {
   // ESTADO PARA GUARDAR DE AXIOS LOS DATOS DE LA API, QUE VAN A SER LOS GENEROS
   const [genreApi, setGenreApi] = useState();
 
-  useEffect(() => { axios.get("https://api.rawg.io/api/genres?key=28d152a4795c4f858cae0c606a326643").then((response) => setGenreApi(response.data.results)) }, [])
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.rawg.io/api/genres?key=28d152a4795c4f858cae0c606a326643"
+      )
+      .then((response) => setGenreApi(response.data.results));
+  }, []);
 
   const platforms = [
     "PC",
@@ -116,15 +126,10 @@ const Form = () => {
 
   const [values, setValues] = useState([]);
 
-
   const handleChangeRating = (e) => {
-
     setRangeValue(e.target.value);
-    setFormData({ ...formData, rating: parseFloat(rangeValue) })
-
-
-
-  }
+    setFormData({ ...formData, rating: parseFloat(rangeValue) });
+  };
 
   const handleChangeCheckBox = (e) => {
     e.persist(); // Necesario para manterner el valor de 'e'
@@ -163,11 +168,11 @@ const Form = () => {
       );
       console.log(formData);
       console.log(response.data);
-      setCreado('creado')
-
+      setCreado("creado");
+      redirijir(3000);
     } catch (error) {
       console.error(error.message);
-      setCreado("no-creado")
+      setCreado("no-creado");
     }
 
     console.log(formData);
@@ -183,9 +188,7 @@ const Form = () => {
   };
 
   return (
-
     <div className={styles.container__form}>
-
       <form onSubmit={handleSubmit} className={styles.form}>
         <h1>Add To VideoGame</h1>
         <input
@@ -202,20 +205,20 @@ const Form = () => {
         <input
           type="text"
           autoComplete="nop"
-
           name="description"
           required
           value={formData.description}
           placeholder="Description"
           onChange={handleChange}
         />
-        {errors.description && <p className={styles.errors}>{errors.description}</p>}
+        {errors.description && (
+          <p className={styles.errors}>{errors.description}</p>
+        )}
 
         <input
           type="text"
           name="released"
           autoComplete="nop"
-
           required
           value={formData.released}
           placeholder="Example: 2005-05-22"
@@ -228,7 +231,6 @@ const Form = () => {
           type="url"
           name="background_image"
           autoComplete="nop"
-
           required
           value={formData.background_image}
           placeholder="Insert URL image"
@@ -236,12 +238,11 @@ const Form = () => {
           multiple
           onChange={handleChange}
         />
-        {errors.background_image && <p className={styles.errors}>{errors.background_image}</p>}
-
-
+        {errors.background_image && (
+          <p className={styles.errors}>{errors.background_image}</p>
+        )}
 
         <div className={styles.container__input__range}>
-
           <input
             type="range"
             name="rating"
@@ -252,12 +253,7 @@ const Form = () => {
             onChange={handleChangeRating}
           />
           <p>Rating: {rangeValue}</p>
-
-
-
         </div>
-
-
 
         <hr />
         <h2>Platforms 🎮 </h2>
@@ -265,7 +261,10 @@ const Form = () => {
         <div className={styles.container__platforms}>
           {platforms &&
             platforms.map((plform) => (
-              <div key={plform} className={styles.container__platforms__div__input}  >
+              <div
+                key={plform}
+                className={styles.container__platforms__div__input}
+              >
                 <input
                   type="checkbox"
                   name="platforms"
@@ -278,53 +277,44 @@ const Form = () => {
             ))}
         </div>
 
-
-
-
-
         <hr />
         <h2>Genres</h2>
         <hr />
 
-
         <div className={styles.container__platforms}>
-
-
-
-          {genreApi && genreApi.map(genre =>
-
-
-            <div key={genre.name} className={styles.container__platforms__div__input}>
-              <input
-
-                type="checkbox"
-                name={genre.name}
-                value={genre.name}
-                onChange={changeValue}
-              />{" "}
-              {genre.name}
-              <br />
-            </div>)
-
-          }
-
-
-
-
+          {genreApi &&
+            genreApi.map((genre) => (
+              <div
+                key={genre.name}
+                className={styles.container__platforms__div__input}
+              >
+                <input
+                  type="checkbox"
+                  name={genre.name}
+                  value={genre.name}
+                  onChange={changeValue}
+                />{" "}
+                {genre.name}
+                <br />
+              </div>
+            ))}
         </div>
-        {Object.keys(errors).length === 0 && formData.platforms.length !== 0 && formData.genres.length !== 0 && (
-          <button className={styles.btn__submit} type="submit">Create</button>
+        {Object.keys(errors).length === 0 &&
+          formData.platforms.length !== 0 &&
+          formData.genres.length !== 0 && (
+            <button className={styles.btn__submit} type="submit">
+              Create
+            </button>
           )}
 
-          {creado === "creado" && <p className={styles.vgCreado }>VideoGame create!!!</p>}
-          {creado === "no-creado" && <p className={styles.vgNoCreado }>VideoGame has not create!!!</p>}
-
+        {creado === "creado" && (
+          <p className={styles.vgCreado}>VideoGame create!!!</p>
+        )}
+        {creado === "no-creado" && (
+          <p className={styles.vgNoCreado}>VideoGame has not create!!!</p>
+        )}
       </form>
-
-
     </div>
-
-
   );
 };
 

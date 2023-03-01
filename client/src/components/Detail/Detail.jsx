@@ -132,7 +132,7 @@ function Detail() {
       );
     } else if (videoGamesDb) {
       return (
-<div key={videoGamesDb.name} className={styles.container_videoGame}>
+        <div key={videoGamesDb.name} className={styles.container_videoGame}>
           <div className={styles.container_image}>
             <img src={videoGamesDb.background_image} alt={videoGamesDb.name} />
           </div>
@@ -176,9 +176,7 @@ function Detail() {
                   {videoGamesDb &&
                     videoGamesDb.platforms
                       .slice(0, 4)
-                      .map((platf) => (
-                        <h2 key={platf}> {platf}</h2>
-                      ))}
+                      .map((platf) => <h2 key={platf}> {platf}</h2>)}
                 </div>
 
                 <div className={styles.container_info_videoGame_text__genres}>

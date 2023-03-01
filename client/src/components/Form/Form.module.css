@@ -117,6 +117,7 @@ input[type="url"]:hover {
   font-weight: 500;
   text-transform: uppercase;
   cursor: pointer;
+  margin-bottom: 1rem;
 }
 
 .container__input__range {
@@ -135,16 +136,14 @@ input[type="url"]:hover {
   border-radius: 0.5rem;
 }
 
-
-.vgCreado{
+.vgCreado {
   background-color: rgb(50, 220, 112);
   padding: 1rem;
   color: #fff;
   border-radius: 0.5rem;
 }
 
-
-.vgNoCreado{
+.vgNoCreado {
   background-color: red;
   padding: 1rem;
   color: #fff;

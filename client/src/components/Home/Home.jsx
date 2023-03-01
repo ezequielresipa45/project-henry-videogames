@@ -8,10 +8,9 @@ import Slider from "infinite-react-carousel";
 import styles from "./Home.module.css";
 import logo from "../../images/logo.png";
 import search from "../../images/buscar.png";
-import flecha_izquierda from "../../images/flecha-izquierda.png"
-import flecha_derecha from "../../images/flecha-derecha.png"
-import Swal from 'sweetalert2'
-
+import flecha_izquierda from "../../images/flecha-izquierda.png";
+import flecha_derecha from "../../images/flecha-derecha.png";
+import Swal from "sweetalert2";
 
 // URL BASE, LA UTILIZAMOS PARA ITERARLA EN UN USE-EFFECTS AGREGANDOLE COMO QUERY LAS PAGINAS, YA QUE POR CADA URL VIENEN 20 VIDEOJUEGOS, Y NECESITAMOS 100.
 const baseUrl =
@@ -20,10 +19,11 @@ const baseUrl =
 let arrayStars = ["⭐", "⭐", "⭐", "⭐"];
 
 function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
-
-
-
-  const redirijir = (time) => { setTimeout(function (time) { window.location.href = '/home' }, time) }
+  const redirijir = (time) => {
+    setTimeout(function (time) {
+      window.location.href = "/home";
+    }, time);
+  };
 
   // ESTE ESTADO LO VAMOS A UTILIZAR PARA GUARDAR LOS 100 VIDEOJUEGOS EN UN SOLO ARRAY, YA QUE EN MI ESTADO DE REDUX ME VIENEN DE A 20 VIDEOJUEGOS POR ARRAYS.
   const [videoGames, setVideoGames] = useState();
@@ -33,7 +33,7 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
 
   // ESTADO QE ALMACENA SOLAMENTE LOS VIDEOJUEGOS DEMI BASE DE DATOS
 
-  const [dbVideoGames, setDbVideoGames] = useState();
+  const [dbVideoGames, setDbVideoGames] = useState([]);
 
   // ESTADO PARA GUARDAR DE AXIOS LOS DATOS DE LA API, QUE VAN A SER LOS GENEROS
   const [genreApi, setGenreApi] = useState();
@@ -49,10 +49,6 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
 
   // Estado para almacenar los valores del input order by, almacenara [ascendent, descendent, etc]
   const [value, setValue] = useState();
-
-
-
-
 
   // ESTADO PARA PAGINAR LOS VIDEOJUEGOS
 
@@ -73,7 +69,6 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
 
   const handleValue = (e) => {
     setValue(e.target.value);
-    // console.log(e.target.value);
   };
 
   // HANDLER PARA SETEAR EL VALOR DEL ESTADO, ESTE ESTADO CONTIENE EL VALOR DEL INPUT PARA BUSCAR VIDEOJUEGOS.
@@ -82,7 +77,6 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
   // HANDLER PARA ALMACENAR EN EL ESTADO GENRE, EL VALOR DEL INPUT QUE EL USUARIO SELECCIONE.
   const handleChange = (e) => {
     setGenre(e.target.value);
-    console.log(e.target.value);
   };
 
   // ESTE USE-EFFECT LLAMA A NUESTRA ACTIONS getVideoGamesApi, ITERANDO 5 VECES PARA LLENAR EL ESTADO de REDUX DE ARRAYS CON VIDEOJUEGOS.
@@ -115,7 +109,6 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
         videoGamesApi[4],
         videoGamesApi[5]
       );
-      // console.log(concatVideoGames)
 
       setVideoGames(concatVideoGames);
     }
@@ -139,23 +132,18 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
         let filtradoVideoGames = videoGamesFilter.filter((videoGame) => {
           return videoGame.genres.some((obj) => obj.name === genre);
         });
-        // console.log( filtradoVideoGames )
         if (!filtradoVideoGames.length) {
           Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'There are no video games with that filter!! Redirecting to home..',
-          })
-          redirijir(3000)
+            icon: "error",
+            title: "Oops...",
+            text: "There are no video games with that filter!! Redirecting to home..",
+          });
+          redirijir(3000);
         }
         setVideoGamesForGenre(filtradoVideoGames);
       }
     }
   }, [genre, videoGamesFilter]);
-
-  let randomNumber = Math.random() * 5;
-
-  Math.floor(randomNumber);
 
   if (videoGames) {
     //FUNCION QUE VA A FILTRAR A LOS VIDEOJUEGOS SEGUN LO QUE EL USUARIO PIDA, EL FILTRADO SE ALMACENA EN videoGamesFilter
@@ -166,21 +154,16 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
         vg.name.toLowerCase().includes(videojuego.toLowerCase())
       );
       if (filtrado.length > 0) {
-        // console.log(state, videojuego);
         setGenre("");
         setVideoGamesFilter(filtrado);
       } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'The game doesn`t exist!, Try again please!! ',
-        })
+          icon: "error",
+          title: "Oops...",
+          text: "The game doesn`t exist!, Try again please!! ",
+        });
       }
     };
-
-    // if (genre && genre === "ninguno") {
-    //   onSearch(character, videoGames);
-    // }
 
     // FUNCION PARA ORDENAR DE LA A-Z - Z-A  || RATING ASC- RATING DESC
 
@@ -209,20 +192,6 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
     return (
       <div>
         <div>
-          {/* <Slider className={styles.sliderImages}>
-
-{videoGames.slice(0, 5).map(image => <div key={image}>
-
-  <p className={styles.titleImages}>{image.name}</p>
-  <img  src={image.background_image} alt="img" />
-
-
-
-</div>)}
-
-</Slider> */}
-
-          {videoGames && console.log(videoGames)}
           <section className={styles.slider}>
             <Slider className={styles.slider__content}>
               {videoGames.slice(5, 10).map((image) => (
@@ -323,9 +292,7 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
                 onChange={handleChange}
                 defaultValue="default"
               >
-                <option value="default" >
-                  Generos
-                </option>
+                <option value="default">Generos</option>
                 <option value="myVideoGames">My VideoGames</option>
 
                 {genreApi &&
@@ -355,9 +322,6 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
             </div>
           </div>
         </div>
-
-        {videoGamesFilter &&
-          console.log(videoGamesFilter.slice(sliceStart, sliceEnd))}
 
         {!videoGamesFilter && (
           <div>
@@ -405,52 +369,54 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
           </div>
         )}
 
-        {!genre 
+        {!genre
           ? videoGamesFilter && (
               <div>
                 <h1>{`VideoGames "${character}"`}</h1>
                 <h4>Based on player counts and release date</h4>
 
+                <div className={styles.container__videoGame}>
+                  {videoGamesFilter.slice(sliceStart, sliceEnd).map((vg) => (
+                    <div
+                      className={styles.container__card__videoGame}
+                      key={vg.id}
+                    >
+                      <img src={vg.background_image} alt={vg.name} />
+                      <h2>{vg.name}</h2>
+                      <div className={styles.container__released}>
+                        <p>Release date:</p>
+                        <h3>{vg.released}</h3>
+                      </div>
+                      <hr />
+                      <div className={styles.container__card__genres}>
+                        <p>Genres:</p>
+                        <div>
+                          {vg.genres &&
+                            vg.genres
+                              .slice(0, 3)
+                              .map((date) => (
+                                <h3 key={date.name}>{date.name}</h3>
+                              ))}
+                        </div>
+                      </div>
 
+                      <hr />
 
+                      <div className={styles.container__chart}>
+                        <p>Chart:</p>
+                        <h3>#{vg.rating_top} Top 2023</h3>
+                      </div>
 
-                <div className={styles.container__videoGame}> 
-                {videoGamesFilter.slice(sliceStart, sliceEnd).map((vg) => (
-                <div className={styles.container__card__videoGame} key={vg.id}>
-                <img src={vg.background_image} alt={vg.name} />
-                <h2>{vg.name}</h2>
-                <div className={styles.container__released}>
-                  <p>Release date:</p>
-                  <h3>{vg.released}</h3>
-                </div>
-                <hr />
-                <div className={styles.container__card__genres}>
-                  <p>Genres:</p>
-                  <div>
-                    {vg.genres &&
-                      vg.genres
-                        .slice(0, 3)
-                        .map((date) => <h3 key={date.name}>{date.name}</h3>)}
-                  </div>
-                </div>
-
-                <hr />
-
-                <div className={styles.container__chart}>
-                  <p>Chart:</p>
-                  <h3>#{vg.rating_top} Top 2023</h3>
-                </div>
-
-                <Link
-                  to={`/detail/${vg.id}`}
-                  key={vg.id}
-                  className={styles.btn__card}
-                >
-                  {" "}
-                  <span>Show more of this</span>
-                </Link>
-              </div>
-                ))}
+                      <Link
+                        to={`/detail/${vg.id}`}
+                        key={vg.id}
+                        className={styles.btn__card}
+                      >
+                        {" "}
+                        <span>Show more of this</span>
+                      </Link>
+                    </div>
+                  ))}
                 </div>
               </div>
             )
@@ -460,57 +426,59 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
                 <h1>{`VideoGames "${character}" - ${genre}`}</h1>
                 <h4>Based on player counts and release date</h4>
 
+                <div className={styles.container__videoGame}>
+                  {videoGamesForGenre.slice(sliceStart, sliceEnd).map((vg) => (
+                    <div
+                      className={styles.container__card__videoGame}
+                      key={vg.id}
+                    >
+                      <img src={vg.background_image} alt={vg.name} />
+                      <h2>{vg.name}</h2>
+                      <div className={styles.container__released}>
+                        <p>Release date:</p>
+                        <h3>{vg.released}</h3>
+                      </div>
+                      <hr />
+                      <div className={styles.container__card__genres}>
+                        <p>Genres:</p>
+                        <div>
+                          {vg.genres &&
+                            vg.genres
+                              .slice(0, 3)
+                              .map((date) => (
+                                <h3 key={date.name}>{date.name}</h3>
+                              ))}
+                        </div>
+                      </div>
 
-                <div className={styles.container__videoGame}>  
-                {videoGamesForGenre.slice(sliceStart, sliceEnd).map((vg) => (
-                <div className={styles.container__card__videoGame} key={vg.id}>
-                <img src={vg.background_image} alt={vg.name} />
-                <h2>{vg.name}</h2>
-                <div className={styles.container__released}>
-                  <p>Release date:</p>
-                  <h3>{vg.released}</h3>
-                </div>
-                <hr />
-                <div className={styles.container__card__genres}>
-                  <p>Genres:</p>
-                  <div>
-                    {vg.genres &&
-                      vg.genres
-                        .slice(0, 3)
-                        .map((date) => <h3 key={date.name}>{date.name}</h3>)}
-                  </div>
-                </div>
+                      <hr />
 
-                <hr />
+                      <div className={styles.container__chart}>
+                        <p>Chart:</p>
+                        <h3>#{vg.rating_top} Top 2023</h3>
+                      </div>
 
-                <div className={styles.container__chart}>
-                  <p>Chart:</p>
-                  <h3>#{vg.rating_top} Top 2023</h3>
-                </div>
-
-                <Link
-                  to={`/detail/${vg.id}`}
-                  key={vg.id}
-                  className={styles.btn__card}
-                >
-                  {" "}
-                  <span>Show more of this</span>
-                </Link>
-              </div>
-                ))}
+                      <Link
+                        to={`/detail/${vg.id}`}
+                        key={vg.id}
+                        className={styles.btn__card}
+                      >
+                        {" "}
+                        <span>Show more of this</span>
+                      </Link>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
 
-        {(dbVideoGames && genre === "myVideoGames")  && (
+        {dbVideoGames.length > 0 && genre === "myVideoGames" ? (
           <div>
             <h1>{`VideoGames "${character}" - My VideoGames`}</h1>
             <h4>Based on player counts and release date</h4>
 
             <div className={styles.container__videoGame}>
-
-            {dbVideoGames.map((vg) => (
-              
+              {dbVideoGames.map((vg) => (
                 <div
                   className="dbVideoGames"
                   style={
@@ -520,63 +488,60 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
                   }
                   key={vg.id}
                 >
-                                 <div className={styles.container__card__videoGame} key={vg.id}>
-                  <img src={vg.background_image} alt={vg.name} />
-                  <h2>{vg.name}</h2>
-                  <div className={styles.container__released}>
-                    <p>Release date:</p>
-                    <h3>{vg.released}</h3>
-                  </div>
-                  <hr />
-                  <div className={styles.container__card__genres}>
-                    <p>Genres:</p>
-                    <div>
-                      {vg.genres &&
-                        vg.genres
-                          .slice(0, 3)
-                          .map((date) => <h3 key={date.name}>{date.name}</h3>)}
-                    </div>
-                  </div>
-
-                  <hr />
-
-                  <div className={styles.container__chart}>
-                    <p>Chart:</p>
-                    <h3>#{vg.rating_top} Top 2023</h3>
-                  </div>
-
-                  <Link
-                    to={`/detail/${vg.id}`}
+                  <div
+                    className={styles.container__card__videoGame}
                     key={vg.id}
-                    className={styles.btn__card}
                   >
-                    {" "}
-                    <span>Show more of this</span>
-                  </Link>
+                    <img src={vg.background_image} alt={vg.name} />
+                    <h2>{vg.name}</h2>
+                    <div className={styles.container__released}>
+                      <p>Release date:</p>
+                      <h3>{vg.released}</h3>
+                    </div>
+                    <hr />
+                    <div className={styles.container__card__genres}>
+                      <p>Genres:</p>
+                      <div>
+                        {vg.genres &&
+                          vg.genres
+                            .slice(0, 3)
+                            .map((date) => (
+                              <h3 key={date.name}>{date.name}</h3>
+                            ))}
+                      </div>
+                    </div>
+
+                    <hr />
+
+                    <div className={styles.container__chart}>
+                      <p>Chart:</p>
+                      <h3>#{vg.rating_top} Top 2023</h3>
+                    </div>
+
+                    <Link
+                      to={`/detail/${vg.id}`}
+                      key={vg.id}
+                      className={styles.btn__card}
+                    >
+                      {" "}
+                      <span>Show more of this</span>
+                    </Link>
+                  </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-                </div>
-              
-            ))} </div>
+              ))}{" "}
+            </div>
           </div>
+        ) : genre === "myVideoGames" && (
+          <h2
+            className={styles.dbMessage}
+          >{`Not exist videoGames "${character}" in to DataBase `}</h2>
         )}
 
         {videoGamesFilter && (
           <div
             className={styles.MostrarMasVideoGamesFilter}
             style={
-              videoGamesForGenre
-                ? { display: "none" }
-                : { display: "flex"}
+              videoGamesForGenre ? { display: "none" } : { display: "flex" }
             }
           >
             <button
@@ -588,21 +553,22 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
               }
               onClick={handlePrevPage}
             >
-
-
-
-<img src={flecha_izquierda} width = {15} alt="arrow" />
+              <img src={flecha_izquierda} width={15} alt="arrow" />
               Previous page
             </button>
 
+            <h2
+              style={
+                genre === "myVideoGames"
+                  ? { display: "none" }
+                  : { display: "block" }
+              }
+            >
+              📄{currentPage}
+            </h2>
 
-
-            <h2 style={genre === "myVideoGames" ? {display: "none"} : {display: "block"}}>📄{currentPage}</h2>
-
-
-
-
-            <button className="btn-siguiente"
+            <button
+              className="btn-siguiente"
               style={
                 videoGamesFilter.length > sliceEnd
                   ? { display: "flex" }
@@ -610,18 +576,14 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
               }
               onClick={handleNextPage}
             >
-              Next page 
-<img src={flecha_derecha} width = {15} alt="arrow" />
-
+              Next page
+              <img src={flecha_derecha} width={15} alt="arrow" />
             </button>
-            
           </div>
         )}
 
         {videoGamesForGenre && (
           <div className={styles.MostrarMasVideoGames}>
-            
-
             <button
               className="btn-anterior"
               style={
@@ -631,13 +593,19 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
               }
               onClick={handlePrevPage}
             >
-           <img src={flecha_izquierda} width = {15} alt="arrow" />
+              <img src={flecha_izquierda} width={15} alt="arrow" />
               Previous page
             </button>
 
-          
-            <h2 style={genre === "myVideoGames" ? {display: "none"} : {display: "block"}}>📄{currentPage}</h2>
-
+            <h2
+              style={
+                genre === "myVideoGames"
+                  ? { display: "none" }
+                  : { display: "block" }
+              }
+            >
+              📄{currentPage}
+            </h2>
 
             <button
               className="btn-siguiente"
@@ -648,8 +616,8 @@ function Home({ getVideoGamesApi, videoGamesApi, getVideoGamesDb }) {
               }
               onClick={handleNextPage}
             >
-              Next page 
-            <img src={flecha_derecha} width = {15} alt="arrow" />
+              Next page
+              <img src={flecha_derecha} width={15} alt="arrow" />
             </button>
           </div>
         )}
