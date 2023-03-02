@@ -35,7 +35,7 @@ function Detail() {
 
   useEffect(() => {
     if (hasMultipleDashes) {
-      axios.get(`http://localhost:3001/videogame/${id}`).then((response) => {
+      axios.get(`https://project-henry-videogames-production.up.railway.app/videogame/${id}`).then((response) => {
         setVideoGamesDb(response.data);
       });
     }

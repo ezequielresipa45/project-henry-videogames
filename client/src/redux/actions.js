@@ -13,7 +13,7 @@ export const getVideoGamesApi = (url) => {
 export const getVideoGamesDb = () => {
   return async function (dispatch) {
     await axios
-      .get("http://localhost:3001/videogames")
+      .get("https://project-henry-videogames-production.up.railway.app/videogames")
       .then((response) =>
         dispatch({ type: "GET_VIDEOGAMES_DB", payload: response.data })
       );

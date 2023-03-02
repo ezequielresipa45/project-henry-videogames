@@ -163,7 +163,7 @@ const Form = () => {
     try {
       // Enviar la solicitud POST a la API
       const response = await axios.post(
-        "http://localhost:3001/videogames",
+        "https://project-henry-videogames-production.up.railway.app/videogames",
         formData
       );
       console.log(formData);
