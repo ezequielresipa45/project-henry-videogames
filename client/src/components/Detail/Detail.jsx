@@ -188,7 +188,7 @@ function Detail() {
               </div>
 
               <Link to="/home">
-                <button className={styles.nav_button}>Atras</button>
+                <button className={styles.nav_button}>Back</button>
               </Link>
             </div>
           </div>
