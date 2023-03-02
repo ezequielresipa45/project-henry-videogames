@@ -13,7 +13,8 @@ router.get("/", (req, res) => {
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/", videoGamesRouter);
 router.use("/genres", genresRouter);
-
+require('dotenv').config();
+const { APIKEY } = process.env;
 
 
 // Llamada a la api videogames, nos traemos los generos y los agregamos a la bd.
@@ -23,7 +24,7 @@ const addGenresDb = require("../controllers/addGenresDb.controller");
 
 (async function traerDatosDeLaApi() {
   const data = await axios(
-    "https://api.rawg.io/api/genres?key=28d152a4795c4f858cae0c606a326643"
+    `https://api.rawg.io/api/genres?key=${APIKEY}`
   );
 
   let datosApis = data.data.results;
