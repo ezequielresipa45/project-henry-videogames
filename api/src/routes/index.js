@@ -20,7 +20,7 @@ const { APIKEY } = process.env;
 // Llamada a la api videogames, nos traemos los generos y los agregamos a la bd.
 
 const axios = require("axios");
-const addGenresDb = require("../controllers/addGenresDb.controller");
+const addGenresDb = require("../controllers/AddGenresDb.controller.js");
 
 (async function traerDatosDeLaApi() {
   const data = await axios(
